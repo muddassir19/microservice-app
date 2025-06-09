@@ -27,14 +27,14 @@ public class ProductUIServlet extends HttpServlet {
 
 
         // call backend service
-        String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
+        //String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
         URL url = new URL("http://35.154.113.145:8081/api/products"); // Use correct backend IP:port
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
-
+         // Send request
         try (OutputStream os = conn.getOutputStream()) {
             os.write(json.getBytes());
             os.flush();
