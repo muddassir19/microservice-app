@@ -19,6 +19,13 @@ public class ProductUIServlet extends HttpServlet {
         String name = request.getParameter("name");
         String price = request.getParameter("price");
 
+        // Logging input
+        System.out.println("Received from UI - Name: " + name + ", Price: " + price);
+
+        String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
+        System.out.println("Sending JSON to backend: " + json);
+
+
         // call backend service
         String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
         URL url = new URL("http://35.154.113.145:8081/api/products"); // Use correct backend IP:port
@@ -30,7 +37,31 @@ public class ProductUIServlet extends HttpServlet {
 
         try (OutputStream os = conn.getOutputStream()) {
             os.write(json.getBytes());
+            os.flush();
         }
+
+        // Read and log backend response
+        int responseCode = conn.getResponseCode();
+        System.out.println("Backend Response Code: " + responseCode);
+
+        if (responseCode >= 200 && responseCode < 300) {
+            System.out.println("Product added successfully via backend API.");
+        } else {
+            System.out.println("Failed to add product. Error response:");
+
+            try (BufferedReader errorReader = new BufferedReader(
+                    new InputStreamReader(conn.getErrorStream()))) {
+                String line;
+                while ((line = errorReader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        }
+
+        conn.disconnect();
+
+        // Redirect to product list page
+
 
         response.sendRedirect("jsp/list.jsp");
     }
