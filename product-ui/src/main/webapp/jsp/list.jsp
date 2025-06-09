@@ -20,6 +20,7 @@
     }
     in.close();
     conn.disconnect();
+    out.println("<p>API Response: " + content.toString() + "</p>");
 
     JSONArray products = new JSONArray(content.toString());
 %>
