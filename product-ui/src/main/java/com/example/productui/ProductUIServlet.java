@@ -17,7 +17,7 @@ public class ProductUIServlet extends HttpServlet {
 
         String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
 
-        URL url = new URL("http://localhost:8080/api/products");
+        URL url = new URL("http://13.203.104.52:8080/api/products");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
