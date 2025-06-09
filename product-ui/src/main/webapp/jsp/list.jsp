@@ -1,4 +1,6 @@
 <%@ page import="java.net.*, java.io.*, org.json.*, java.util.*" %>
+<%@ page import="org.json.JSONArray" %>
+<%@ page import="org.json.JSONObject" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head><title>Product List</title></head>
