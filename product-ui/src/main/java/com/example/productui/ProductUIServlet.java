@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@WebServlet("/addProduct") // Optional if web.xml is present
+//@WebServlet("/addProduct") // Optional if web.xml is present
 public class ProductUIServlet extends HttpServlet {
 
     @Override
@@ -21,7 +21,7 @@ public class ProductUIServlet extends HttpServlet {
 
         // call backend service
         String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
-        URL url = new URL("http://13.203.104.52:8081/api/products"); // Use correct backend IP:port
+        URL url = new URL("http://35.154.113.145:8081/api/products"); // Use correct backend IP:port
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
