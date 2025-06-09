@@ -9,15 +9,20 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@WebServlet("/addProduct")
+@WebServlet("/addProduct") // Optional if web.xml is present
 public class ProductUIServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // form data
         String name = request.getParameter("name");
         String price = request.getParameter("price");
 
+        // call backend service
         String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
+        URL url = new URL("http://13.203.104.52:8081/api/products"); // Use correct backend IP:port
 
-        URL url = new URL("http://13.203.104.52:8080/api/products");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
@@ -30,3 +35,24 @@ public class ProductUIServlet extends HttpServlet {
         response.sendRedirect("jsp/list.jsp");
     }
 }
+// @WebServlet("/addProduct")
+// public class ProductUIServlet extends HttpServlet {
+//     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//         String name = request.getParameter("name");
+//         String price = request.getParameter("price");
+
+//         String json = String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
+
+//         URL url = new URL("http://13.203.104.52:8080/api/products");
+//         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//         conn.setDoOutput(true);
+//         conn.setRequestMethod("POST");
+//         conn.setRequestProperty("Content-Type", "application/json");
+
+//         try (OutputStream os = conn.getOutputStream()) {
+//             os.write(json.getBytes());
+//         }
+
+//         response.sendRedirect("jsp/list.jsp");
+//     }
+// }
